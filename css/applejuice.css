@@ -1,0 +1,292 @@
+/*
+Apple Juice
+@author:ludan
+@addr:ningbo,zhejiang
+*/
+body{
+    font:14px/1.5 "Microsoft YaHei","宋体","Arial","SimSun","\u5B8B\u4F53";
+    color:#333;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, input, textarea, p, blockquote, th, td{
+    margin:0;
+    padding:0;
+}
+ul,li{
+    list-style: none;
+}
+em,i,b{font-style: normal}
+h1,h2,h3{font-weight: normal}
+/*通用表格*/
+table{
+    width:100%;
+    text-align: center;
+}
+.collaps{
+    border-collapse: collapse;
+}
+
+/*表格默认 标题栏目背景灰，内容行背景白，带下划线分隔 标题列#000*/
+.tb-default{background-color:#fff}
+.tb-default th{
+    line-height:2.857;
+    border-bottom:solid 1px #f1f1f1;
+    font-weight: 100;
+    color:#000;
+}
+.tb-default td{
+    border-bottom:solid 1px #f1f1f1;
+    line-height: 2.667;
+}
+/*斑马线背景表格*/
+.tb-banma-line thead{
+    background-color: #e7e6e6;
+}
+.tb-banma-line tbody tr:nth-child(even){
+    background-color:#f2f2f2;
+}
+.tb-banma-line tbody tr:nth-child(odd){
+    background-color:#fff;
+}
+.tb-banma-line th,
+.tb-banma-line td{line-height: 30px}
+
+/*表格 标题栏目灰 ,单元格边框黑*/
+.tb-deep,.tb-light{
+    border-collapse:collapse;
+}
+.tb-deep thead tr,
+.tb-light thead tr{
+    background-color:#7a7a7a;
+    color:#fff;
+}
+.tb-deep thead,
+.tb-light thead{
+    border-left: solid 1px #7a7a7a;
+    border-right: solid 1px #7a7a7a;
+}
+.tb-deep tbody,
+.tb-light tbody{ 
+    border-collapse: collapse;
+    border-spacing: 1px;
+}
+.tb-deep tbody{border-left: solid 1px #000;}
+.tb-deep tbody tr,
+.tb-light tbody tr{
+    background-color: #fff;
+}
+.tb-deep td {
+    border-right: solid 1px #000;
+    border-bottom: solid 1px #000;
+    color: #5e5e78;
+}
+
+/*表格 标题栏目灰 ,单元格边框浅黑(7a7a7a),单元格分割线灰*/
+.tb-light tbody{
+     border-left: solid 1px #7a7a7a;
+}
+.tb-light td {
+    border-right: solid 1px #e4e2e2;
+    border-bottom: solid 1px #7a7a7a;
+    color: #5e5e78;
+}
+.tb-light tr td:last-child{border-right: solid 1px #7a7a7a;}
+/*表格 其它配套设置*/
+ /*字体浅灰 标题头font-weight 100*/
+.set-table-light{
+    color:#757575;
+}.set-table-light th{
+    font-weight: 100;
+}
+/*按钮组*/
+.btn{
+	display:inline-block;
+	padding:8px 12px;
+	border-radius:4px;
+	border:1px solid transparent;
+    outline:0;
+	white-space:nowrap;
+	line-height:1;
+    /*font-size:14px;*/
+	font-size:1em;/*字体大小由父容器决定*/
+	-webkit-user-select: none;
+	user-select:none;
+	cursor:pointer;
+    text-align: center;
+    color:#fff;
+}
+.btn:hover{
+    text-decoration: none
+}
+/*通用按钮大小*/
+.btn-x{
+    padding:4px;
+}
+.btn-default{
+	background-color:#0af;
+}
+.btn-hot{
+	background-color:#ffa200;
+}
+.btn-hope{
+	background-color:#1cbe8a;
+}
+.btn-warn{
+	background-color:#ea1f1f;
+}
+.btn-fail{
+    background-color:#727272;
+}
+.btn-default:hover{background-color:#0584C4}
+.btn-hot:hover{background-color:#ed9702}
+.btn-hope:hover{background-color:#0ea977}
+.btn-warn:hover{background-color:#9b0a0a}
+.btn-fail:hover{background-color:#333}
+
+/*其它色块*/
+.pink-default{background-color:#f458b4;}
+.blue-dark{background-color: #69f}
+.blue-light{background-color: #36c7e1}
+.green-light{background-color: #3fd880}
+.green-lighter{background-color:#3fd8a4 }
+.purple-light{background-color: #bc71f1} /*浅紫色*/
+.orange-block{background-color:orange}
+.orange-dark{background-color:#ef9247}
+.orange-light{background-color:#e8b62f}
+.red-light{background-color: #ea4f3f}
+
+
+.pink-default:hover{background-color:#ff3399;}
+.blue-dark:hover{background-color: #36c}
+.blue-light:hover{background-color: #099}
+.green-light:hover{background-color: #396}
+.green-lighter:hover{background-color:#096 }
+.purple-light:hover{background-color: #93f} /*浅紫色*/
+.orange-block:hover{background-color:orange}
+.orange-dark:hover{background-color:#c63}
+.orange-light:hover{background-color:#c90}
+.red-light:hover{background-color: #c33}
+/*link组(字体颜色，不涉及背景)*/
+.lnk-default{color:#079cff}
+.lnk-Melancholy{color:#03c}
+.lnk-hope{color:#0ea977;}
+.lnk-warn{color:#f94646!important;}
+.lnk-hot{color:#ffa200;}
+.lnk-em{color:#000!important;}
+.lnk-duty{color:#782d10;}
+.lnk-gray{color:gray;}
+
+/*左中右*/
+.txt-center {
+    text-align: center;
+}
+.txt-right {
+    text-align: right;
+}
+.txt-left {
+    text-align: left;
+}
+
+/*三角形*/
+.triangle-down{
+    display: inline-block;
+    width:0;
+    height:0;
+    border-bottom-width:0;
+    border-top:solid 8px #555;
+    border-right:solid 6px transparent;
+    border-left:solid 6px transparent;
+    vertical-align: middle;
+}
+.triangle-right{
+    display: inline-block;
+    width:0;
+    height:0;
+    border-right-width:0;
+    border-left:solid 8px #555;
+    border-top:solid 6px transparent;
+    border-bottom:solid 6px transparent;
+    vertical-align: middle;
+}
+/*等边直角(原型取自正方形右上角)*/
+.equa-zj-default{
+    display: inline-block;
+    width:0;
+    height:0;
+    border:solid 4px #49b6fe;
+    border-left-color:#fff;
+    border-bottom-color:#fff;
+}
+
+/*将直角显示在容器右上角*/
+.zj-top-right .equa-zj-default{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*通用圆点状图标*/
+.i-circle{
+    display: inline-block;
+    width:12px;
+    height:12px;
+    border-radius: 50%;
+}
+/*上三角 下三角 （升降排序）*/
+.i-order{
+    display: inline-block;
+    width:10px;
+    height:17px;
+    vertical-align: middle;
+}
+.i-asc,.i-desc{
+    display: block;
+    content:"";
+    width:0;
+    height:0;
+    border-style: solid;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    cursor: pointer;
+}
+.i-asc{
+    border-bottom-width:6px;
+    border-bottom-color:#16b8be;
+    border-top-width: 0;
+    margin-bottom:4px;
+}
+.i-desc{
+    border-top-width:6px;
+    border-top-color:#16b8be;
+    border-bottom-width: 0;
+}
+.asc-none-active{
+    border-bottom-color:#cdcdcd;
+}
+.desc-none-active{
+    border-top-color:#cdcdcd;
+}
+
+/*进度条列表*/
+.charts-progress-list .item{
+    position:relative;
+    margin-bottom:18px
+}
+.charts-progress-list span{position: absolute;right:0}
+.item-prog-body{
+    margin-top:2px;background-color:#eceff4
+}
+.item-prog-body div{
+    height:5px;
+    background-color:#ffb93a
+}
+.charts-progress-list .item:nth-child(3n-2) .item-prog-body div{
+    background-color:#ffcd33
+}
+.charts-progress-list .item:nth-child(3n-1) .item-prog-body div{
+    background-color:#eb4549
+}
+.charts-progress-list .item:nth-child(3n) .item-prog-body div{
+    background-color:#25d1d7
+}
