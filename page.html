@@ -39,33 +39,69 @@
     {title:'titleJ',id:'10'},
     {title:'titleK',id:'11'},
     {title:'titleL',id:'12'},
-    {title:'titleM',id:'13'}
+    {title:'titleM',id:'13'},
+    {title:'titleM',id:'14'},
+    {title:'titleM',id:'15'},
+    {title:'titleM',id:'16'},
+    {title:'titleM',id:'17'},
+    {title:'titleM',id:'18'},
+    {title:'titleM',id:'19'},
+    {title:'titleM',id:'20'},
+    {title:'titleM',id:'21'},
+    {title:'titleM',id:'22'}
 ]
 
-var Pager={
+var DataList={
     init:{
         dom:null,
-        pageSize:4,
+        pageSize:10,
         currentPage:1,
-        pageCount:1
+        pageCount:3
     },
     data:data,
+    
+    //重绘
     Render:function(){
 
         var tbl="<table>";
-        for(var i=0;i<this.data.length;i++){
+        var pgsize=this.init.pageSize;
+        if(this.data.length<pgsize)
+            {
+                pgsize=this.data.length;
+            }
+
+        var maxPageSize=this.init.currentPage*pgsize;
+        if(this.init.currentPage*pgsize>=this.data.length){
+            maxPageSize=this.data.length
+        }
+
+        for(var i=(this.init.currentPage-1)*pgsize;i<maxPageSize;i++){
             tbl+="<tr><td><button>删除</button></td><td>"+this.data[i].id+"</td><td>"+this.data[i].title+"</td></tr>";
         }
-        tbl+="</table>";
+        tbl+="</table><div class='page'>";
 
+        for(var i=1;i<=this.init.pageCount;i++){
+            tbl+="<a href=\"#\">"+i+"</a>"
+        }
+        tbl+="</div>";
         this.init.dom.innerHTML=tbl;
         this.bind();
     },
     deleteItem:function(index){
-        this.data.splice(index,1);
-        this.update();
+        this.data.splice((this.init.currentPage-1)*this.init.pageSize+index,1);
+        this.Render();
     },
-    update:function(){
+
+    //更新数据
+    //当要获取的数据条数大于当前页*pagesize,则从服务器更新数据
+    update:function(page){
+        if(page*this.init.pageSize>this.init.currentPage*this.init.pageSize){
+
+            this.data.push({title:'titleA',id:'23'})
+        }
+    },
+    setPageHTML:function(cpage){
+        this.init.currentPage=cpage;
         this.Render();
     },
     bind:function(){
@@ -73,7 +109,14 @@ var Pager={
         //参见https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList
         Array.prototype.forEach.call(document.querySelectorAll("table button"), function(item,index){
         item.addEventListener("click",function(event){
-            Pager.deleteItem(index)
+            DataList.deleteItem(index)
+        },false)
+        });
+
+        Array.prototype.forEach.call(document.querySelectorAll(".page a"), function(item,index){
+        item.addEventListener("click",function(event){
+            DataList.update(item.innerHTML);
+            DataList.setPageHTML(item.innerHTML);
         },false)
         });
     }
@@ -85,9 +128,9 @@ var Pager={
 </script>
 <script>
     (function(){
-    Pager.init.dom=document.getElementById("pager");
+    DataList.init.dom=document.getElementById("pager");
    // Pager.init({dom:document.getElementById("pager")});
-    Pager.Render();
+    DataList.Render();
 })()
 </script>
     </body>
