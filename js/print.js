@@ -26,6 +26,7 @@ QQ:46589025
     var head_= DocumentPrint.getElementsByTagName('head')[0]; 
     var lnk=DocumentPrint.createElement("link");
 
+    /**加载相关样式代码 */
     lnk.setAttribute("href","../assets/css/adm2016.css");
     lnk.setAttribute("rel","stylesheet");
     lnk.setAttribute("type","text/css");
