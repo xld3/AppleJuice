@@ -1,0 +1,91 @@
+<!doctype html>
+<html> 
+    <head>
+        <meta charset="utf-8"/>
+        <title>高效数据页操作</title>
+    <style>
+        table{width:400px;border:solid 1px red}
+        table tr:nth-child(odd){
+            background-color:#782d10;
+        }
+    </style>
+    </head>
+    <body>
+        <!--
+            作者：宁波徐Ludan
+            QQ:46589025
+            
+            基于js、及ajax实现后端高效分页
+            基本原理：
+            如果是第一次加载，则从服务端取数据，然后存入本地数组或字面量对象。
+            否则，直接从数组取相关数据。
+
+            那么删除数据行的时候，则从相关数组里删除数据，然后更新分页
+            本案例仅在于简单实现，具体要结合生产环境
+        -->
+<div id="pager"></div>
+<script>
+  
+        var data=[
+    {title:'titleA',id:'1'},
+    {title:'titleB',id:'2'},
+    {title:'titleC',id:'3'},
+    {title:'titleD',id:'4'},
+    {title:'titleE',id:'5'},
+    {title:'titleF',id:'6'},
+    {title:'titleG',id:'7'},
+    {title:'titleH',id:'8'},
+    {title:'titleI',id:'9'},
+    {title:'titleJ',id:'10'},
+    {title:'titleK',id:'11'},
+    {title:'titleL',id:'12'},
+    {title:'titleM',id:'13'}
+]
+
+var Pager={
+    init:{
+        dom:'',
+        pageSize:4,
+        currentPage:1,
+        pageCount:1
+    },
+    data:data,
+    Render:function(){
+
+        var tbl="<table>";
+        for(var i=0;i<this.data.length;i++){
+            tbl+="<tr><td><button>删除</button></td><td>"+this.data[i].id+"</td><td>"+this.data[i].title+"</td></tr>";
+        }
+        tbl+="</table>";
+
+        this.init.dom.innerHTML=tbl;
+        this.bind();
+    },
+    deleteItem:function(index){
+        this.data.splice(index,1);
+        this.update();
+    },
+    update:function(){
+        this.Render();
+    },
+    bind:function(){
+        Array.prototype.forEach.call(document.querySelectorAll("table button"), function(item,index){
+        item.addEventListener("click",function(event){
+            Pager.deleteItem(index)
+        },false)
+        });
+    }
+
+}
+
+
+
+</script>
+<script>
+    (function(){
+    Pager.init.dom=document.getElementById("pager");
+    Pager.Render();
+})()
+</script>
+    </body>
+</html>
