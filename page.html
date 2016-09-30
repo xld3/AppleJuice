@@ -25,12 +25,12 @@
         -->
 <div>
     <button class="aj-btn-del">删除</button>
+    <button class="add">添加</button>
 </div>
 <div>
     <input type="checkbox" id="ckb_selectAll"/>
 </div>
 <div id="pager"></div>
-
 <script>
   
         var data=[
@@ -119,7 +119,7 @@ var DataList={
         this.bind();
     },
 
-    //index为数组形式，允许删除多行,不兼容IE8
+    //index为数组形式，允许删除多行,forEach不兼容IE8
     deleteItem:function(ItemAry){
        var that=this; 
       
@@ -178,7 +178,11 @@ var DataList={
 }
 
 
-
+ document.querySelector(".add").addEventListener("click",function(event){
+        data.push({title:'titleA',id:'23'})
+        DataList.data=data;
+        DataList.Render();
+    },false)
 </script>
 <script>
     (function(){
