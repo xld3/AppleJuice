@@ -55,7 +55,15 @@
     {title:'titleM',id:'19'},
     {title:'titleM',id:'20'},
     {title:'titleM',id:'21'},
-    {title:'titleM',id:'22'}
+    {title:'titleM',id:'22'},
+    {title:'titleM',id:'23'},
+    {title:'titleM',id:'24'},
+    {title:'titleM',id:'25'},
+    {title:'titleM',id:'26'},
+    {title:'titleM',id:'27'},
+    {title:'titleM',id:'28'},
+    {title:'titleM',id:'29'},
+    {title:'titleM',id:'30'}
 ]
 
 var DataList={
@@ -63,15 +71,16 @@ var DataList={
         dom:null,
         pageSize:10,
         currentPage:1,
-        count:22,
+        count:function(){return DataList.data.length},
         pageCount:function(){
-            return Math.ceil(this.count/this.pageSize)
+            return Math.ceil(this.count()/this.pageSize)
         },
         other:{
-           //删除是否更新服务器数据
-            isDelToserver:false
+           //删除时是否更新服务器数据
+            isDelToserver:false,
+            delproURI:null
         }
-        
+
     },
     data:data,
     
@@ -89,8 +98,15 @@ var DataList={
         if(this.init.currentPage*pgsize>=this.data.length){
             maxPageSize=this.data.length
         }
-
-        for(var i=(this.init.currentPage-1)*pgsize;i<maxPageSize;i++){
+       
+       //重绘时，可能发生的当前页改变（如删除数据，可能出现第三页必须变成第二页的情况）
+        var startIndex=(this.init.currentPage-1)*pgsize
+        if(!this.data[startIndex]){
+            startIndex-=pgsize;
+            this.init.currentPage-=1;
+        }
+       
+        for(var i=startIndex;i<maxPageSize;i++){
             tbl+="<tr><td><input type='checkbox' class='aj-chk' value='"+this.data[i].id+"'/></td><td>"+this.data[i].id+"</td><td>"+this.data[i].title+"</td></tr>";
         }
         tbl+="</table><div class='page'>";
@@ -106,22 +122,23 @@ var DataList={
     //index为数组形式，允许删除多行,不兼容IE8
     deleteItem:function(ItemAry){
        var that=this; 
+      
        ItemAry.forEach(function(item,index){
-          
          that.data.splice((that.init.currentPage-1)*that.init.pageSize+item-index,1);
-       
        })
         
         this.Render();
     },
 
     //更新数据
-    //当要获取的数据条数大于当前页*pagesize,则从服务器更新数据
+    //当数组中不存在相关页数据,则从服务器更新数据
     update:function(page){
-        if(page*this.init.pageSize>this.init.currentPage*this.init.pageSize){
 
-            this.data.push({title:'titleA',id:'23'})
-        }
+        if(!this.data[(page-1)*this.init.pageSize]){
+            
+            //此处可通过ajax来获取数据
+           this.data.push({title:'titleA',id:'23'})
+       }
     },
     setPageHTML:function(cpage){
         this.init.currentPage=cpage;
@@ -147,7 +164,6 @@ var DataList={
             if(chkAry.length>0){
                 DataList.deleteItem(chkAry)
             }
-          
             
 
         },false)
