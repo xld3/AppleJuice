@@ -6,7 +6,7 @@
     <style>
         table{width:400px;border:solid 1px red}
         table tr:nth-child(odd){
-            background-color:#782d10;
+            background-color:#f3f3f3;
         }
     </style>
     </head>
@@ -23,7 +23,14 @@
             那么删除数据行的时候，则从相关数组里删除数据，然后更新分页
             本案例仅在于简单实现，具体要结合生产环境
         -->
+<div>
+    <button class="aj-btn-del">删除</button>
+</div>
+<div>
+    <input type="checkbox" id="ckb_selectAll"/>
+</div>
 <div id="pager"></div>
+
 <script>
   
         var data=[
@@ -56,7 +63,15 @@ var DataList={
         dom:null,
         pageSize:10,
         currentPage:1,
-        pageCount:3
+        count:22,
+        pageCount:function(){
+            return Math.ceil(this.count/this.pageSize)
+        },
+        other:{
+           //删除是否更新服务器数据
+            isDelToserver:false
+        }
+        
     },
     data:data,
     
@@ -76,19 +91,27 @@ var DataList={
         }
 
         for(var i=(this.init.currentPage-1)*pgsize;i<maxPageSize;i++){
-            tbl+="<tr><td><button>删除</button></td><td>"+this.data[i].id+"</td><td>"+this.data[i].title+"</td></tr>";
+            tbl+="<tr><td><input type='checkbox' class='aj-chk' value='"+this.data[i].id+"'/></td><td>"+this.data[i].id+"</td><td>"+this.data[i].title+"</td></tr>";
         }
         tbl+="</table><div class='page'>";
 
-        for(var i=1;i<=this.init.pageCount;i++){
+        for(var i=1;i<=this.init.pageCount();i++){
             tbl+="<a href=\"#\">"+i+"</a>"
         }
         tbl+="</div>";
         this.init.dom.innerHTML=tbl;
         this.bind();
     },
-    deleteItem:function(index){
-        this.data.splice((this.init.currentPage-1)*this.init.pageSize+index,1);
+
+    //index为数组形式，允许删除多行,不兼容IE8
+    deleteItem:function(ItemAry){
+       var that=this; 
+       ItemAry.forEach(function(item,index){
+          
+         that.data.splice((that.init.currentPage-1)*that.init.pageSize+item-index,1);
+       
+       })
+        
         this.Render();
     },
 
@@ -107,12 +130,27 @@ var DataList={
     bind:function(){
 
         //参见https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList
-        Array.prototype.forEach.call(document.querySelectorAll("table button"), function(item,index){
+        /*Array.prototype.forEach.call(document.querySelectorAll(".aj-btn-del"), function(item,index){
         item.addEventListener("click",function(event){
             DataList.deleteItem(index)
         },false)
         });
+        */
+        document.querySelector(".aj-btn-del").addEventListener("click",function(event){
+            var chkAry=[];
+            var chklist=document.querySelectorAll(".aj-chk");
+            for(var m=0;m<chklist.length;m++){
+                if(chklist[m].checked){
+                    chkAry.push(m);
+                }
+            }
+            if(chkAry.length>0){
+                DataList.deleteItem(chkAry)
+            }
+          
+            
 
+        },false)
         Array.prototype.forEach.call(document.querySelectorAll(".page a"), function(item,index){
         item.addEventListener("click",function(event){
             DataList.update(item.innerHTML);
