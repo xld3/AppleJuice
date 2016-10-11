@@ -2,17 +2,120 @@
 <html> 
     <head>
         <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
         <title>H5触摸滑动展示</title>
-        <style></style>
+        <style>
+           html,body,ul{margin:0;padding:0}
+            ul{width:calc(375px*4);list-style:none}
+            .slider-pic{overflow:hidden}
+          li{float:left;width:375px;height:100px}
+          li:nth-child(1){
+              background-color:red
+          }
+           li:nth-child(2){
+              background-color:green
+          }
+           li:nth-child(3){
+              background-color:blue
+          }
+           li:nth-child(4){
+              background-color:orange
+          }
+          /*动画*/
+          .moveL{
+             transition:all 0.5s; 
+          }
+        </style>
     </head>
     <body>
-
-        <ul>
+        <div style="width:100%;overflow:hidden">
+<ul class="slider-pic">
             <li></li>
             <li></li>
             <li></li>
             <li></li>
         </ul>
+        </div>
+        <script>
+            (function(){
+                var sliderPic=document.querySelector(".slider-pic");
+                var originTouches=[];
+                var moveX=0,
+                    touchMove=0,
+                    startMoveX=0,
+                    endMoveX=0,i=1,
+                    itemW=document.querySelector(".slider-pic li").offsetWidth;
+                    console.log(itemW);
+                Array.prototype.forEach.call(document.querySelectorAll(".slider-pic"), function(item,index){
+                item.addEventListener("touchstart",function(event){
+                    event.preventDefault();
+                    var touches = event.changedTouches;
+        
+                        for (var i=0; i<touches.length; i++) {
+                            originTouches.push(touches[i]);
+                            startMoveX=touches[i].pageX;
+                        }
+                        
+                },false)
+                item.addEventListener("touchmove",function(event){
+                    event.preventDefault();
+                    var touches = event.changedTouches;
+                    
+                  
+                    /*        
+                    for (var i=0; i<touches.length; i++) {
+                        
+                       // var idx = ongoingTouchIndexById(touches[i].identifier);
+
+                     
+                        //ctx.lineTo(, touches[i].pageY);
+                       // console.log(touches[i].pageX)
+                  
+                        
+                    }
+                    */
+                    touchMove=touches[0].pageX-originTouches[0].pageX;
+                       moveX=moveX+touchMove;
+                     
+                        sliderPic.style.webkitTransform="translate3D("+moveX+"px,0,0)"
+                     
+                       
+                      
+                   originTouches.splice(0,1,touches[0])
+                },false)
+                item.addEventListener("touchend",function(event){
+                    event.preventDefault();
+                   var touches = event.changedTouches;
+                   endMoveX=touches[0].pageX;
+                   originTouches.splice(0,1);
+                   if(Math.abs(endMoveX-startMoveX)>=30){
+                       if(endMoveX-startMoveX<=-30){
+                            moveX=moveX-(itemW-(Math.abs(endMoveX-startMoveX)));
+                       }
+                       if(endMoveX-startMoveX>=30){
+                          moveX=moveX+itemW-(Math.abs(endMoveX-startMoveX));
+                       }
+                      
+                  // this.classList.add("moveL");
+               
+                      i++;
+                     }else{
+                         //回退移动到原来位置
+                         if(endMoveX-startMoveX>=0){
+                              moveX=moveX-(endMoveX-startMoveX)
+                         }else{
+                              moveX=moveX-(endMoveX-startMoveX)
+                         }
+                        
+                        
+                     }
+
+             //  this.style.webkitTransform="translateX("+moveX+"px)";
+                    
+                   
+                },false)
+                });
+            })()
+        </script>
     </body>
 </html>
